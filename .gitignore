@@ -1,0 +1,4 @@
+.venv/
+.env
+database.db
+users.db

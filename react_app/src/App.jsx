@@ -100,7 +100,7 @@ isFinished: false,
 
 function App() {
   const [tasks, setTask] = useState(const_tasks)
-  const [isAuthorized, setIsAuth] = useState(true) // на будущее
+  const [isAuthorized, setIsAuth] = useState(false) // на будущее
 
   function updateTasks(id, newValue) {
     
@@ -151,11 +151,11 @@ function App() {
       )
   } 
   // TODOTODO!!!s
-  // else if (!isAuthorized) {
-  //   return (
-  //     <Auth setAuthirized={ () => {auth} }></Auth>
-  //   )
-  // }
+  else if (!isAuthorized) {
+    return (
+      <Auth setAuthirized={ () => {setIsAuth(true)} }></Auth>
+    )
+  }
 }
 
 

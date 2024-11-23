@@ -1,8 +1,9 @@
 import {useRef, useEffect, useState} from 'react';
-// import {mainStyles} from "./main.scss";
+import { BASE } from '../../../links';
+
 
 export default function Auth({setAuthirized}) {
-    const [code, setCode] = useState('')
+    const inputRef = useRef(null);
     const [inputValue, setInputValue] = useState("false")
 
     const removeAuthBlock = () => {
@@ -21,16 +22,16 @@ export default function Auth({setAuthirized}) {
             return
         }
         try {
-            // const response = await axios.get('https://your-api-endpoint.com/data', {});
+            const response = await axios.get(`${BASE}/get_code/${code}`, {});
 // TODO: обращение к апи
-            if (code === "1111") {
-
-                setAuthirized()
-                removeAuthBlock()
-                localStorage.setItem("my_code", code)
-                setInputValue("true")
+            console.log(response)
+            alert()
+            setAuthirized()
+            // removeAuthBlock()
+            localStorage.setItem("my_code", code)
+            setInputValue("true")
                 
-            }
+            
             
             
           } catch (err) {
@@ -64,15 +65,17 @@ export default function Auth({setAuthirized}) {
 
                 <form>
                     <input
-                        type="password"
+                        type="text"
                         name="password"
                         placeholder="ваш код"
-                        aria-label="Password"
+                        // aria-label="Password"
+                        ref={inputRef}
                         autoComplete="current-password"
                         area-invalid={inputValue}
                         required
+                        // onInput={(e) => setCode(e.target.value)}
                     />
-                    <button type="submit" onClick={chechCode}>
+                    <button type="submit" onClick={chechCode(inputRef.current)}>
                     Вход
                     </button>
                 </form>

@@ -74,7 +74,9 @@ function App() {
 
   async function fetchList() {
     try {
-      const response = await fetch(`${BASE}/get_tasks_and_goals/5593392332`); // коварнейшая штука
+      // 5593392332
+      // alert(userId.current)
+      const response = await fetch(`${BASE}/get_tasks_and_goals/${userId.current}`); // коварнейшая штука
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }

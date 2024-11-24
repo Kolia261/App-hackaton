@@ -3,7 +3,7 @@ import { BASE } from '../../../links';
 
 
 export default function Auth({setAuthirized}) {
-    const inputRef = useRef(null);
+    const inputRef = useRef();
     const [inputValue, setInputValue] = useState("false")
 
     const removeAuthBlock = () => {
@@ -22,14 +22,19 @@ export default function Auth({setAuthirized}) {
             return
         }
         try {
-            const response = await axios.get(`${BASE}/get_code/${code}`, {});
-// TODO: обращение к апи
-            console.log(response)
-            alert()
-            setAuthirized()
-            // removeAuthBlock()
-            localStorage.setItem("my_code", code)
-            setInputValue("true")
+
+            // TODO: обращение к апи
+            if (code === "Hk5eea") {
+                // console.log(response)
+
+                const response = "5593392332"
+                
+                setAuthirized(response)
+                // removeAuthBlock()
+                localStorage.setItem("my_code", code)
+                setInputValue("true")
+
+            }
                 
             
             
@@ -58,6 +63,11 @@ export default function Auth({setAuthirized}) {
     // };
     }, []);
 
+
+    const handleClick = () => {
+        chechCode(inputRef.current.value)
+    };
+
     return (
         <div id='auth_block'>
             {/* // <main ref={mainRef}> */}
@@ -66,7 +76,7 @@ export default function Auth({setAuthirized}) {
                 <form>
                     <input
                         type="text"
-                        name="password"
+                        name="code"
                         placeholder="ваш код"
                         // aria-label="Password"
                         ref={inputRef}
@@ -75,7 +85,7 @@ export default function Auth({setAuthirized}) {
                         required
                         // onInput={(e) => setCode(e.target.value)}
                     />
-                    <button type="submit" onClick={chechCode(inputRef.current)}>
+                    <button type="submit" onClick={handleClick}>
                     Вход
                     </button>
                 </form>

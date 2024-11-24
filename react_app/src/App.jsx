@@ -1,4 +1,4 @@
-import { useState } from 'react'
+import { useEffect, useRef, useState } from 'react'
 import reactLogo from './assets/react.svg'
 import viteLogo from '/vite.svg'
 import './App.css'
@@ -101,6 +101,8 @@ isFinished: false,
 function App() {
   const [tasks, setTask] = useState(const_tasks)
   const [isAuthorized, setIsAuth] = useState(false) // на будущее
+  const userId = useRef()
+
 
   function updateTasks(id, newValue) {
     
@@ -122,14 +124,33 @@ function App() {
     });
   }
 
-  // let tasks_sliced = tasks.slice(30)
   const cell_tasks = tasks.slice(0,19).map((task, index) => (
     
-    <Cell key={task.id} taskId={5} title={task.title} finishTask={() => { updateTasks(task.id, {isFinished: true}) }}/>
+    <Cell key={index} taskId={index} title={task.title} finishTask={() => { updateTasks(task.id, {completed: true}) }}/>
   ));
 
-  function auth() {
+  async function fetchList() {
+    try {
+      const response = await fetch('http://127.0.0.1:8000/get_tasks_and_goals/5593392332');
+      if (!response.ok) {
+          throw new Error('Network response was not ok');
+      }
+
+      const data = await response.json();
+      alert(data)
+      console.log(data)
+      setTask(data.tasks)
+      // displayData(data);
+      } catch (error) {
+          console.error('Error fetching data:', error);
+          dataContainer.innerHTML = '<p>Error: ' + error.message + '</p>';
+      }
+  }
+
+  function auth(newUserId) {
     setIsAuth(true)
+    userId.current = newUserId
+    fetchList()
   }
 
   if (isAuthorized) {
@@ -153,7 +174,7 @@ function App() {
   // TODOTODO!!!s
   else if (!isAuthorized) {
     return (
-      <Auth setAuthirized={ () => {setIsAuth(true)} }></Auth>
+      <Auth setAuthirized={ auth }></Auth>
     )
   }
 }

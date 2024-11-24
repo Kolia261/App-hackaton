@@ -91,7 +91,7 @@ def process_add_task(message):
     task = message.text.strip()
     user_id = message.from_user.id
 
-    cursor.execute("INSERT INTO tasks (user_id, task) VALUES (?, ?)", (user_id, task))
+    cursor.execute("INSERT INTO tasks (user_id, task, finished, data) VALUES (?, ?)", (user_id, task, False, "nothing"))
     conn.commit()
     
     bot.send_message(message.chat.id, f'Задача "{task}" успешно добавлена.')

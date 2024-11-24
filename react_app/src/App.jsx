@@ -1,6 +1,4 @@
 import { useEffect, useRef, useState } from 'react'
-import reactLogo from './assets/react.svg'
-import viteLogo from '/vite.svg'
 import './App.css'
 import Cell from './components/cell/Cell'
 import Auth from './components/auth/auth'
@@ -31,15 +29,10 @@ function App() {
   const [tasks, setTask] = useState(const_tasks)
   const [isAuthorized, setIsAuth] = useState(false) // на будущее
   const userId = useRef()
-
+  // const [goal, setGoal] = useState(null) //TOOD: сделать цели
 
   function updateTasks(id, newValue) {
     
-    // tasks.map(task => {
-    //   if (task.id === id) {
-    //     console.log(task, "aloha");
-    //   }
-    // }); // работает)
 
     setTask(prevTasks => {
       const updatedTasks = prevTasks.map(task => {
@@ -81,7 +74,9 @@ function App() {
 
   async function fetchList() {
     try {
-      const response = await fetch(`${BASE}/get_tasks_and_goals/5593392332`);
+      // 5593392332
+      // alert(userId.current)
+      const response = await fetch(`${BASE}/get_tasks_and_goals/${userId.current}`); // коварнейшая штука
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }
@@ -106,7 +101,6 @@ function App() {
       gridElement.style.visibility = "visible";
     }
 
-    alert(gridElement.style.visibility)
 
     const authElement = document.getElementById("auth_block");
     if (gridElement) {

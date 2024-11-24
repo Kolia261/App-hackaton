@@ -5,7 +5,7 @@ import sqlite3
 import telebot
 
 TOKEN = os.getenv('TOKEN')
-bot = telebot.TeleBot('6456632705:AAFKER6dKXXchVLVkuPqSl3S0lSCAc-fFys')
+bot = telebot.TeleBot('')
 
 conn = sqlite3.connect('tasks_and_goals.db', check_same_thread=False)
 cursor = conn.cursor()

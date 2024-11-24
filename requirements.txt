@@ -14,6 +14,8 @@ charset-normalizer==3.4.0
     # via requests
 fastapi==0.115.5
     # via -r requirements.in
+fastapi-cors
+
 idna==3.10
     # via
     #   anyio
@@ -30,7 +32,7 @@ requests==2.32.3
     #   telebot
 sniffio==1.3.1
     # via anyio
-starlette==0.41.3
+starlette
     # via fastapi
 telebot==0.0.5
     # via -r requirements.in

@@ -5,7 +5,7 @@ import sqlite3
 import telebot
 
 TOKEN = os.getenv('TOKEN')
-bot = telebot.TeleBot(TOKEN)
+bot = telebot.TeleBot('6456632705:AAFKER6dKXXchVLVkuPqSl3S0lSCAc-fFys')
 
 conn = sqlite3.connect('tasks_and_goals.db', check_same_thread=False)
 cursor = conn.cursor()
@@ -20,9 +20,10 @@ CREATE TABLE IF NOT EXISTS users (
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS tasks (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
     task TEXT,
+    completed BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 ''')
@@ -38,17 +39,17 @@ CREATE TABLE IF NOT EXISTS goals (
 
 conn.commit()
 
-ALLOWED_USER_ID = os.getenv("TG_ID")  
-print(ALLOWED_USER_ID)
-def is_allowed_user(user_id):
-    return str(user_id) == ALLOWED_USER_ID
+# ALLOWED_USER_ID = os.getenv("TG_ID")  
+# print(ALLOWED_USER_ID)
+# def is_allowed_user(user_id):
+#     return str(user_id) == ALLOWED_USER_ID
     
 
 @bot.message_handler(commands=['start'])
 def start(message):
-    if not is_allowed_user(message.from_user.id):
-        bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
-        return
+    # if not is_allowed_user(message.from_user.id):
+    #     bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
+    #     return
     bot.send_message(message.chat.id, "Привет! Это панель управления для родителей. Доступны следующие команды:\n"
                                       "/view_tasks - просмотреть список задач\n"
                                       "/add_task - добавить новую задачу\n"
@@ -57,9 +58,9 @@ def start(message):
 
 @bot.message_handler(commands=['view_tasks'])
 def view_tasks(message):
-    if not is_allowed_user(message.from_user.id):
-        bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
-        return
+    # if not is_allowed_user(message.from_user.id):
+    #     bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
+    #     return
 
     user_id = message.from_user.id
     cursor.execute("SELECT task FROM tasks WHERE user_id=?", (user_id,))
@@ -80,9 +81,9 @@ def view_tasks(message):
 
 @bot.message_handler(commands=['add_task'])
 def add_task(message):
-    if not is_allowed_user(message.from_user.id):
-        bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
-        return
+    # if not is_allowed_user(message.from_user.id):
+    #     bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
+    #     return
 
     msg = bot.reply_to(message, 'Введите название задачи:')
     bot.register_next_step_handler(msg, process_add_task)
@@ -91,16 +92,16 @@ def process_add_task(message):
     task = message.text.strip()
     user_id = message.from_user.id
 
-    cursor.execute("INSERT INTO tasks (user_id, task) VALUES (?, ?)", (user_id, task))
+    cursor.execute("INSERT INTO tasks (user_id, task, completed) VALUES (?, ?, ?)", (user_id, task, False))
     conn.commit()
     
     bot.send_message(message.chat.id, f'Задача "{task}" успешно добавлена.')
 
 @bot.message_handler(commands=['set_goal'])
 def set_goal(message):
-    if not is_allowed_user(message.from_user.id):
-        bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
-        return
+    # if not is_allowed_user(message.from_user.id):
+    #     bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
+    #     return
 
     msg = bot.reply_to(message, 'Введите цель для ребенка:')
     bot.register_next_step_handler(msg, process_set_goal)
@@ -114,15 +115,18 @@ def process_set_goal(message):
 
     bot.send_message(message.chat.id, f'Цель "{goal}" успешно установлена.')
 
+
 def generate_random_code(length=6):
     characters = string.ascii_letters + string.digits
     code = ''.join(random.choice(characters) for _ in range(length))
     return code
+
+
 @bot.message_handler(commands=['save_code'])
 def save_code(message):
-    if not is_allowed_user(message.from_user.id):
-        bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
-        return
+    # if not is_allowed_user(message.from_user.id):
+    #     bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
+    #     return
 
     secret_code = generate_random_code()
     user_id = message.from_user.id
@@ -145,9 +149,9 @@ def save_code(message):
 
 @bot.message_handler(commands=['update_code'])
 def update_code(message):
-    if not is_allowed_user(message.from_user.id):
-        bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
-        return
+    # if not is_allowed_user(message.from_user.id):
+    #     bot.send_message(message.chat.id, "У вас нет доступа к этому боту.")
+    #     return
 
     new_secret_code = generate_random_code()
     user_id = message.from_user.id

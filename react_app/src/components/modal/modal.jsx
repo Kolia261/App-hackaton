@@ -20,7 +20,7 @@ export default function Modal({taskId, text, progress, title, setConfirmed}) {
       <article>
         <header>
           <button aria-label="Close" rel="prev" onClick={handleClose}></button>
-          <h3 style={{textAlign:"left"}}>{title}</h3> 
+          <h3 >{title}</h3> 
         </header>
         <p style={{textAlign:"left"}}>
           {text}
@@ -29,7 +29,7 @@ export default function Modal({taskId, text, progress, title, setConfirmed}) {
           <button className="secondary" onClick={handleClose}>
             ок
           </button>
-          <button onClick={handleClick}>выполнил!</button>
+          <button style={{marginLeft: 0}} onClick={handleClick}>выполнил!</button>
         </footer>
       </article>
     </dialog>

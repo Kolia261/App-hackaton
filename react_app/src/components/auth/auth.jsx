@@ -90,7 +90,7 @@ export default function Auth({setAuthirized}) {
 
 
                 </form>
-                    <img style={{width:"350px"}} src={"https://i.ibb.co/x11N0Zq/IMG-20241124-133930-945.jpg"} alt="qr code" />
+                    <img style={{width:"350px", position:"relative", left:"10%"}} src={"https://i.ibb.co/x11N0Zq/IMG-20241124-133930-945.jpg"} alt="qr code" />
                 </div>
 
             </div>

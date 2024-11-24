@@ -26,7 +26,7 @@ export default function Cell({taskId, title, isFinished, text, finishTask, compl
             <ModalProvider>
                 <ModalButton style={{backgroundColor:color}}>
                 <p style={{}}>{title}</p>
-                <Modal text={"с шампунем"} title={"помой голову"} id={5} progress={isFinished} setConfirmed={() => {finishTask(); setIsFinished()}}/>
+                <Modal text={""} title={title} id={5} progress={isFinished} setConfirmed={() => {finishTask(); setIsFinished()}}/>
 
                 </ModalButton>
             </ModalProvider>

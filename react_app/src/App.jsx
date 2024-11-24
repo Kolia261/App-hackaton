@@ -4,6 +4,7 @@ import viteLogo from '/vite.svg'
 import './App.css'
 import Cell from './components/cell/Cell'
 import Auth from './components/auth/auth'
+import { BASE } from '../links'
 
 
 // n = 10
@@ -12,88 +13,14 @@ const const_tasks = [
   {
     id: 1,
     title: "the name",
-isFinished: false,
+completed: false,
   },
   {
     id: 2,
     title: "the name",
-isFinished: false,
+    completed: false,
   },
-  {
-    id: 3,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 4,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 5,
-    title: "the name",
-isFinished: false,
-  },,
-  {
-    id: 6,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 7,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 8,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 9,
-    title: "the name",
-isFinished: false,
-  },,
-  {
-    id: 10,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 11,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 12,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 13,
-    title: "the name",
-isFinished: false,
-  },,
-  {
-    id: 14,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 15,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 16,
-    title: "the name",
-isFinished: false,
-  },
-  {
-    id: 17,
-    title: "the name",
-isFinished: false,
-  },
+  
 ]
 
 
@@ -115,6 +42,7 @@ function App() {
     setTask(prevTasks => {
       const updatedTasks = prevTasks.map(task => {
         if (task.id === id) {
+          completeTask(id)
           return { ...task, ...newValue };
         }
         return task;
@@ -126,12 +54,34 @@ function App() {
 
   const cell_tasks = tasks.slice(0,19).map((task, index) => (
     
-    <Cell key={index} taskId={index} title={task.title} finishTask={() => { updateTasks(task.id, {completed: true}) }}/>
+    <Cell key={index} taskId={index} isFinished={task.completed} completed={task.completed} title={task.title} finishTask={() => { updateTasks(task.id, {completed: true}) }}/>
   ));
+
+
+  async function completeTask(taskId) {
+    try {
+      const response = await fetch(`${BASE}/update/${taskId}`, {
+        method: 'PUT',
+      });
+
+      if (!response.ok) {
+        throw new Error(`HTTP error! status: ${response.status}`);
+      }
+
+      const result = await response.json();
+      console.log(result);
+
+      alert(`Задача обновлена успешно! Результат: ${JSON.stringify(result)}`);
+
+    } catch (error) {
+      console.error('Ошибка при обновлении задачи:', error);
+      alert(`Произошла ошибка при обновлении задачи: ${error.message}`);
+    }
+  }
 
   async function fetchList() {
     try {
-      const response = await fetch('http://127.0.0.1:8000/get_tasks_and_goals/5593392332');
+      const response = await fetch(`${BASE}/get_tasks_and_goals/5593392332`);
       if (!response.ok) {
           throw new Error('Network response was not ok');
       }

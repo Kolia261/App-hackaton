@@ -7,8 +7,8 @@ import { ModalProvider } from '../../context/ModalContext';
 
 // TODO: сделать так, чтобы здесь можно было отправить запрос на сервер, что задача детенком выполнена 
 
-export default function Cell({taskId, title, isFinished, text, finishTask}) {
-    const [color, setColor] = useState("red")
+export default function Cell({taskId, title, isFinished, text, finishTask, completed}) {
+    const [color, setColor] = useState(completed ? "green" : "red")
 
     function setIsFinished() {
         setColor("green")

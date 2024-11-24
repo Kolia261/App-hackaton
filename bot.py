@@ -20,9 +20,10 @@ CREATE TABLE IF NOT EXISTS users (
 
 cursor.execute('''
 CREATE TABLE IF NOT EXISTS tasks (
-    id INTEGER PRIMARY KEY,
+    id INTEGER PRIMARY KEY AUTOINCREMENT,
     user_id INTEGER,
     task TEXT,
+    completed BOOLEAN,
     FOREIGN KEY (user_id) REFERENCES users (user_id)
 );
 ''')
@@ -91,7 +92,7 @@ def process_add_task(message):
     task = message.text.strip()
     user_id = message.from_user.id
 
-    cursor.execute("INSERT INTO tasks (user_id, task, finished, data) VALUES (?, ?)", (user_id, task, False, "nothing"))
+    cursor.execute("INSERT INTO tasks (user_id, task, completed) VALUES (?, ?, ?)", (user_id, task, False))
     conn.commit()
     
     bot.send_message(message.chat.id, f'Задача "{task}" успешно добавлена.')

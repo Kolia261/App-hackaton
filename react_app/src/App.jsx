@@ -73,11 +73,9 @@ function App() {
       const result = await response.json();
       console.log(result);
 
-      alert(`Задача обновлена успешно! Результат: ${JSON.stringify(result)}`);
 
     } catch (error) {
       console.error('Ошибка при обновлении задачи:', error);
-      alert(`Произошла ошибка при обновлении задачи: ${error.message}`);
     }
   }
 
@@ -89,7 +87,6 @@ function App() {
       }
 
       const data = await response.json();
-      alert(data)
       console.log(data)
       setTask(data.tasks)
       // displayData(data);
@@ -103,36 +100,53 @@ function App() {
     setIsAuth(true)
     userId.current = newUserId
     fetchList()
+
+    const gridElement = document.getElementById("cells");
+    if (gridElement) {
+      gridElement.style.visibility = "visible";
+    }
+
+    alert(gridElement.style.visibility)
+
+    const authElement = document.getElementById("auth_block");
+    if (gridElement) {
+      authElement.style.display = "none";
+    }
   }
 
-  if (isAuthorized) {
-  return (
-        <ThemeProvider>
-          <header className='container'>
-            <ColorSchemeSwitcher className="contrast"></ColorSchemeSwitcher>
-          </header>
-        <div className="main">
-          {/* <h1>Список задач</h1>
-            <div className="table-header">
-            <span>ID</span>
-            <span>Название задачи</span>
-            </div> */}
-          <div className="grid">
-            {cell_tasks}
-          </div>
+  // if (!isAuthorized) {
 
-
-        </div>
-        </ThemeProvider>
-        
-      )
-  } 
-  // TODOTODO!!!s
-  else if (!isAuthorized) {
     return (
-      <Auth setAuthirized={ auth }></Auth>
+      <ThemeProvider>
+        <header className='container' style={{display:"flex"}} >
+            <ColorSchemeSwitcher className="contrast" style={{marginRight: "40px", scale:"2", position: "relative", top:"25px"}}></ColorSchemeSwitcher>
+              <h1>Привет, юный друг</h1>
+            
+          </header>
+
+             <div className="grid" id='cells' style={{}}>
+         {cell_tasks}
+       </div>
+        <Auth setAuthirized={ auth } id="auth_block"></Auth>
+
+      </ThemeProvider>
     )
-  }
+  // }
+  //  else {
+
+  //   <ThemeProvider>
+  //   <header className='container' style={{display:"flex"}} >
+  //       <ColorSchemeSwitcher className="contrast" style={{marginRight: "40px", scale:"2", position: "relative", top:"25px"}}></ColorSchemeSwitcher>
+  //         <h1>Привет, юный друг</h1>
+        
+  //     </header>
+
+    
+    
+  
+  // </ThemeProvider>
+  // }
+    
 }
 
 

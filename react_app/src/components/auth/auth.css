@@ -1,6 +1,3 @@
-/* .auth {
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
+#auth_block {
     min-height: 100vh;
-} */
+}

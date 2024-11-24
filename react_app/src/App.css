@@ -11,5 +11,13 @@
   width: 60%;
   display: grid;
   grid-template-rows: max-content;
+  border: 2px;
+  border-radius: 15px;
+  border-color: black;
   grid-template-columns: 1fr 1fr 1fr 1fr;
+}
+
+#cells {
+  visibility: hidden;
+
 }

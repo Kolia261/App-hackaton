@@ -5,6 +5,8 @@ import './App.css'
 import Cell from './components/cell/Cell'
 import Auth from './components/auth/auth'
 import { BASE } from '../links'
+import ColorSchemeSwitcher from './components/colorShcemeSwithcer'
+import { ThemeProvider } from './context/ThemeContext'
 
 
 // n = 10
@@ -12,7 +14,7 @@ import { BASE } from '../links'
 const const_tasks = [
   {
     id: 1,
-    title: "the name",
+    title: "упс",
 completed: false,
   },
   {
@@ -105,12 +107,15 @@ function App() {
 
   if (isAuthorized) {
   return (
-        
+        <ThemeProvider>
+          <header className='container'>
+            <ColorSchemeSwitcher className="contrast"></ColorSchemeSwitcher>
+          </header>
         <div className="main">
           {/* <h1>Список задач</h1>
             <div className="table-header">
-              <span>ID</span>
-              <span>Название задачи</span>
+            <span>ID</span>
+            <span>Название задачи</span>
             </div> */}
           <div className="grid">
             {cell_tasks}
@@ -118,6 +123,7 @@ function App() {
 
 
         </div>
+        </ThemeProvider>
         
       )
   } 

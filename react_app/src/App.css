@@ -10,6 +10,6 @@
   height: 60%;
   width: 60%;
   display: grid;
-  /* grid-template-rows: max-content; */
+  grid-template-rows: max-content;
   grid-template-columns: 1fr 1fr 1fr 1fr;
 }

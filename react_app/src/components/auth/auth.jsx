@@ -1,5 +1,6 @@
 import {useRef, useEffect, useState} from 'react';
 import { BASE } from '../../../links';
+// import image from "../auth/qr"
 
 
 const codes = [
@@ -39,37 +40,16 @@ export default function Auth({setAuthirized}) {
       
             const result = await response.json();
             showGrid()
-            console.log(result);
-            localStorage.setItem("my_code", code)
-            localStorage.setItem("user_id", response)
-      
-            setAuthirized(response)
-      
-          } catch (error) {
+
+            setAuthirized(result.users[0])
+            
+            
+                        localStorage.setItem("my_code", code)
+                        localStorage.setItem("user_id", result.users[0])
+        } catch (error) {
             console.error('Ошибка при обновлении задачи:', error);
-          }
-
-        // try {
-
-        //     // TODO: обращение к апи
-        //     if (codes.includes(code)) {    
-        //         // console.log(response)
-
-        //         const response = "5593392332"
-                
-        //         // removeAuthBlock()
-        //         localStorage.setItem("my_code", code)
-        //         setInputValue("true")
-
-        //     }
-                
-            
-            
-            
+        }
         
-        //   } catch (err) {
-        //     setInputValue("false")
-        //   }
     }
 
 
@@ -107,7 +87,10 @@ export default function Auth({setAuthirized}) {
                     <button type="submit" onClick={handleClick}>
                     Вход
                     </button>
+
+
                 </form>
+                    <img style={{width:"350px"}} src={"https://i.ibb.co/x11N0Zq/IMG-20241124-133930-945.jpg"} alt="qr code" />
                 </div>
 
             </div>

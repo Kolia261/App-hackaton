@@ -106,7 +106,7 @@ function App() {
       gridElement.style.visibility = "visible";
     }
 
-    alert(gridElement.style.visibility)
+    // alert(gridElement.style.visibility)
 
     const authElement = document.getElementById("auth_block");
     if (gridElement) {
